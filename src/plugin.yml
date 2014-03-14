@@ -1,0 +1,43 @@
+name: SyncChest
+version: 0.9.8pre
+description: Sync your Chests for Teamgames
+website: http://dev.bukkit.org/bukkit-plugins/SyncChest/
+author: Aubli
+main: me.Aubli.SyncChest.SyncChest
+
+commands:
+    sc:
+        description: The main command for SyncChest!
+        usage: /<command>
+    sctoggle:
+        description: Toggle SyncChest
+        usage: /<command>
+        aliases: [sct, sctoggle, syncchesttoggle, syncchestt]    
+    scmain:
+        description: Set the main Chests!
+        usage: /<command> [Amount]
+        aliases: [scm, scmain, syncchestmain, syncchestm]
+    screlated:
+        description: Set the related Chests!
+        usage: /<command>
+        aliases: [scr, screlated, syncchestrelated, syncchestr]
+    scconnector:
+        description: Gaves the connector-item to an player.
+        usage: /<command>
+        aliases: [scconn, scconnector, syncchestconnector]
+    sclink:
+        description: Link to chests
+        usage: /<command> [RelatedChest] [MainChest]
+        aliases: [scl, sclink, syncchestlink]
+    scdeLink:
+        description: Remove all links between main- and related chests!
+        usage: /<command>
+        aliases: [scd, scdl, scdelink, scdeletelink, syncchestdelink]
+    screset:
+        description: Delete all Chest from SyncChest!
+        usage: /<command>
+        aliases: [screset, syncchestreset]
+    scclear:
+        description: Remove Chest items from the inventory.
+        usage: /<command>
+        aliases: [scclear, scc, syncchestclear]

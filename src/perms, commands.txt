@@ -1,0 +1,16 @@
+scmain 		sc.set.main
+screlated 	sc.set.related
+sclink		sc.link
+scconnector sc.get.connector
+scdelink	sc.remove.links
+screset		sc.reset
+scclear		sc.clear
+sctoggle	sc.toggle
+
+use:
+	sc.use
+	sc.use.connector
+	sc.set.main
+	sc.set.related
+	sc.link
+	sc.remove.chests

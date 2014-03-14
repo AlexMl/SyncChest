@@ -1,0 +1,40 @@
+0.9.8:
+	*Updated bukkit version
+	*Updated plugin structure
+	*code improvements
+	*add metrics stats
+	*improve hoppers a bit
+
+0.9.6:
+	*Fixed a bug in multiworld support
+
+0.9.5:
+	*add multi world support
+	**you can now use/connect chests over different worlds (hoppers too)
+	*fixed some bugs
+
+0.9.3:
+	*full hopper support
+	**item transport from and in linked chests
+	**enchantment support
+	*console can now toggle syncchest
+	*improvements and bug fixing
+0.9:
+	*info output connector
+	*chest.yml improvements for info output
+	*fixed bug in /scdeletelinks
+	*bug fixes
+0.8.2:
+	*huge linking bug fixed
+0.8.1:
+	*message change
+	*permission bugs
+	*change class names from SyncChests to SyncChest
+0.8:
+	*language support
+	*permission update
+	*toggle syncchest ingame command
+	*Color support
+
+0.7.1:
+	*initial update
