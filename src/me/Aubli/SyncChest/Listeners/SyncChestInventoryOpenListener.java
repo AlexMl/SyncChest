@@ -1,4 +1,4 @@
-package me.Aubli.Listeners;
+package me.Aubli.SyncChest.Listeners;
 
 import me.Aubli.SyncChest.SyncChest;
 

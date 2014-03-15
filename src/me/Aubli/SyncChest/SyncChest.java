@@ -6,15 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-import me.Aubli.Listeners.SyncChestBlockBreakListener;
-import me.Aubli.Listeners.SyncChestBlockPlaceListener;
-import me.Aubli.Listeners.SyncChestInventoryListener;
-import me.Aubli.Listeners.SyncChestInventoryMoveListener;
-import me.Aubli.Listeners.SyncChestInventoryOpenListener;
-import me.Aubli.Listeners.SyncChestPlayerInteractListener;
+import me.Aubli.SyncChest.Listeners.SyncChestBlockBreakListener;
+import me.Aubli.SyncChest.Listeners.SyncChestBlockPlaceListener;
+import me.Aubli.SyncChest.Listeners.SyncChestInventoryListener;
+import me.Aubli.SyncChest.Listeners.SyncChestInventoryMoveListener;
+import me.Aubli.SyncChest.Listeners.SyncChestInventoryOpenListener;
+import me.Aubli.SyncChest.Listeners.SyncChestPlayerInteractListener;
 
 import org.util.Metrics.Metrics;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
