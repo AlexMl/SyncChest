@@ -1,10 +1,18 @@
+1.0.0:
+	**Updated bukkit version to 1.7.5
+	**Updated plugin structure
+	**huge code improvements
+	*+add metrics stats with own Graphs
+	**improve hoppers a bit
+	**change Commands and permissions
+	*+added nice command syntax help
+	*+added chest converter for previous plugin versions
+	*-removed toggle option
+	**editing messages is more easier
+	
 0.9.8:
-	*Updated bukkit version
-	*Updated plugin structure
-	*code improvements
-	*add metrics stats
-	*improve hoppers a bit
-
+	*Updated bukkit
+	
 0.9.6:
 	*Fixed a bug in multiworld support
 
