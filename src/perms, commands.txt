@@ -1,16 +1,11 @@
-scmain 		sc.set.main
-screlated 	sc.set.related
-sclink		sc.link
-scconnector sc.get.connector
-scdelink	sc.remove.links
-screset		sc.reset
-scclear		sc.clear
-sctoggle	sc.toggle
-
-use:
-	sc.use
-	sc.use.connector
-	sc.set.main
-	sc.set.related
-	sc.link
-	sc.remove.chests
+	
+sc.help 			show help message
+sc.tool				use the tool
+sc.remove			remove chests and hoppers
+sc.status 			get the status message
+sc.chests	 		get chests and place them
+sc.hoppers			place hoppers
+sc.link 			link and unlink chests
+sc.use				open chests
+sc.save				save config
+sc.reload			reload config
