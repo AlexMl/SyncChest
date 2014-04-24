@@ -18,14 +18,14 @@ public class SyncChestCommands implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {		
 		/*
 		 * SyncChest Commands:
-		 * 	- sc help
+		 *  - sc help
 		 *  - sc status
 		 *  - sc save
 		 *  - sc reload
 		 *  - sc tool
 		 *  - sc main [amount]
-		 * 	- sc related [amount]
-		 * 	- sc link [RelatedChest-ID] [MainChest-ID]
+		 *  - sc related [amount]
+		 *  - sc link [RelatedChest-ID] [MainChest-ID]
 		 *  - sc unlink [RelatedChest-ID] [MainChest-ID]
 		 */
 		

@@ -9,3 +9,16 @@ sc.link 			link and unlink chests
 sc.use				open chests
 sc.save				save config
 sc.reload			reload config
+
+
+sc help							sc.help
+sc status						sc.status
+sc save							sc.save
+sc reload						sc.reload
+sc tool							sc.tool
+
+sc main [amount]					sc.chests
+sc related [amount]					sc.chests
+
+sc link [RelatedChest-ID] [MainChest-ID]		sc.link
+sc unlink [RelatedChest-ID] [MainChest-ID]		sc.link
