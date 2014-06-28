@@ -51,8 +51,8 @@ public class SyncChest extends JavaPlugin {
 	public void onDisable() {
 		SyncManager.getManager().saveConfig();
 		
-		for(int i=0;i<Bukkit.getOnlinePlayers().length;i++){
-			clearPlayerInventory(Bukkit.getOnlinePlayers()[i]);
+		for(Player player : Bukkit.getOnlinePlayers()){
+			clearPlayerInventory(player);
 		}
 		
 		log.info("[SyncChest] Plugin is disabled!");

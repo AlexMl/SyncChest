@@ -1,3 +1,6 @@
+1.1.0:
+	**Changed Bukkit version to 1.7.9
+
 1.0.0:
 	**Updated bukkit version to 1.7.5
 	**Updated plugin structure
