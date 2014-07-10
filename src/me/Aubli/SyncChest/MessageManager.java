@@ -88,23 +88,23 @@ public class MessageManager {
 	}
 	
 	private void loadMessages(){
-		this.config_saved = messageConfig.getString("messages.config_saved");
-		this.config_reloaded = messageConfig.getString("messages.config_reloaded");
-		this.chest_placed = messageConfig.getString("messages.chest_place");
-		this.chest_removed = messageConfig.getString("messages.chest_removed");
-		this.chests_linked = messageConfig.getString("messages.chest_linked");
-		this.chests_unlinked = messageConfig.getString("messages.chest_unlinked");
-		this.hopper_placed = messageConfig.getString("messages.hopper_placed");
-		this.hopper_removed = messageConfig.getString("messages.hopper_removed");
-		this.chest_selected = messageConfig.getString("messages.chest_selected");
+		this.config_saved = messageConfig.getString("messages.config_saved")==null?"Config saved!":messageConfig.getString("messages.config_saved");
+		this.config_reloaded = messageConfig.getString("messages.config_reloaded")==null?"Chests and Hoppers are loaded!":messageConfig.getString("messages.config_reloaded");
+		this.chest_placed = messageConfig.getString("messages.chest_place")==null?"Chest placed!":messageConfig.getString("messages.chest_place");
+		this.chest_removed = messageConfig.getString("messages.chest_removed")==null?"Chest removed!":messageConfig.getString("messages.chest_removed");
+		this.chests_linked = messageConfig.getString("messages.chest_linked")==null?"Connection successfully set!":messageConfig.getString("messages.chest_linked");
+		this.chests_unlinked = messageConfig.getString("messages.chest_unlinked")==null?"Connection removed!":messageConfig.getString("messages.chest_unlinked");
+		this.hopper_placed = messageConfig.getString("messages.hopper_placed")==null?"Hopper placed!":messageConfig.getString("messages.hopper_placed");
+		this.hopper_removed = messageConfig.getString("messages.hopper_removed")==null?"Hopper removed!":messageConfig.getString("messages.hopper_removed");
+		this.chest_selected = messageConfig.getString("messages.chest_selected")==null?"Chest selected!":messageConfig.getString("messages.chest_selected");
 		
-		this.no_Permissions = messageConfig.getString("error.no_permissions");
-		this.chest_not_available = messageConfig.getString("error.chest_not_available");
-		this.chest_place_error = messageConfig.getString("error.chest_place_error");
-		this.chest_remove_error = messageConfig.getString("error.chest_remove_error");
-		this.hopper_place_error = messageConfig.getString("error.hopper_placed_error");
-		this.hopper_remove_error = messageConfig.getString("error.hopper_remove_error");	
-		this.not_a_number = messageConfig.getString("error.not_a_number");
+		this.no_Permissions = messageConfig.getString("error.no_permissions")==null?"You don't have enough permissions!":messageConfig.getString("error.no_permissions");
+		this.chest_not_available = messageConfig.getString("error.chest_not_available")==null?"These Chests are not available!":messageConfig.getString("error.chest_not_available");
+		this.chest_place_error = messageConfig.getString("error.chest_place_error")==null?"An Error occurred while attempting to place this chest!":messageConfig.getString("error.chest_place_error");
+		this.chest_remove_error = messageConfig.getString("error.chest_remove_error")==null?"An Error occurred while attempting to remove this chest!":messageConfig.getString("error.chest_remove_error");
+		this.hopper_place_error = messageConfig.getString("error.hopper_placed_error")==null?"An Error occurred while attempting to place this hopper!":messageConfig.getString("error.hopper_placed_error");
+		this.hopper_remove_error = messageConfig.getString("error.hopper_remove_error")==null?"An Error occurred while attempting to remove this hopper!":messageConfig.getString("error.hopper_remove_error");
+		this.not_a_number = messageConfig.getString("error.not_a_number")==null?"Only Numbers are allowed here!":messageConfig.getString("error.not_a_number");
 	}
 	
 	public static MessageManager getManager(){
