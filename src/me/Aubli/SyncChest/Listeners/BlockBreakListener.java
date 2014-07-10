@@ -1,8 +1,8 @@
 package me.Aubli.SyncChest.Listeners;
 
 import me.Aubli.SyncChest.MessageManager;
-import me.Aubli.SyncChest.SyncManager;
-import me.Aubli.SyncChest.SyncManager.ChestType;
+import me.Aubli.SyncChest.SyncObjects.SyncManager;
+import me.Aubli.SyncChest.SyncObjects.SyncManager.ChestType;
 import me.Aubli.SyncChest.SyncChest;
 
 import org.bukkit.block.Chest;

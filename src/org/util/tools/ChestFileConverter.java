@@ -9,11 +9,11 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import me.Aubli.SyncChest.MainChest;
-import me.Aubli.SyncChest.RelatedChest;
 import me.Aubli.SyncChest.SyncChest;
-import me.Aubli.SyncChest.SyncManager;
-import me.Aubli.SyncChest.SyncManager.ChestType;
+import me.Aubli.SyncChest.SyncObjects.MainChest;
+import me.Aubli.SyncChest.SyncObjects.RelatedChest;
+import me.Aubli.SyncChest.SyncObjects.SyncManager;
+import me.Aubli.SyncChest.SyncObjects.SyncManager.ChestType;
 
 public class ChestFileConverter {
 	

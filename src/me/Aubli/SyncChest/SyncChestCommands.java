@@ -1,5 +1,9 @@
 package me.Aubli.SyncChest;
 
+import me.Aubli.SyncChest.SyncObjects.MainChest;
+import me.Aubli.SyncChest.SyncObjects.RelatedChest;
+import me.Aubli.SyncChest.SyncObjects.SyncManager;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

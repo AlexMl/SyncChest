@@ -1,4 +1,4 @@
-package me.Aubli.SyncChest;
+package me.Aubli.SyncChest.SyncObjects;
 
 import java.io.File;
 import java.io.IOException;

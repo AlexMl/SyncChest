@@ -10,6 +10,7 @@ import me.Aubli.SyncChest.Listeners.InventoryListener;
 import me.Aubli.SyncChest.Listeners.InventoryMoveListener;
 import me.Aubli.SyncChest.Listeners.InventoryOpenListener;
 import me.Aubli.SyncChest.Listeners.PlayerInteractListener;
+import me.Aubli.SyncChest.SyncObjects.SyncManager;
 
 import org.util.Metrics.Metrics;
 import org.util.Metrics.Metrics.Graph;

@@ -1,10 +1,9 @@
-package me.Aubli.SyncChest;
+package me.Aubli.SyncChest.SyncObjects;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import me.Aubli.SyncChest.SyncManager.ChestType;
+import me.Aubli.SyncChest.SyncObjects.SyncManager.ChestType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,8 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 
-
-public class MainChest{
+public class RelatedChest{
 	
 	private File chestFile;
 	private FileConfiguration chestConfig;
@@ -28,27 +26,25 @@ public class MainChest{
 	private boolean doubleChest;
 	private boolean linked;
 	
-	private ArrayList<RelatedChest> linkedChests;
+	private MainChest linkedChest;
 	private ChestType chestType;
 	
-	public MainChest(String chestPath, ChestType type, Location chestLoc, int ID, boolean doubleChest){
+	public RelatedChest(String chestPath, ChestType type, Location chestLoc, int ID, boolean doubleChest){
 		this.chestLoc = chestLoc;
 		this.ChestID = ID;
 		this.doubleChest = doubleChest;
 		this.chestType = type;
 		
 		this.linked = false;
-		this.doubleChest = doubleChest;
+		this.doubleChest = false;
 		
 		this.chestFile = new File(chestPath + "/" + ChestID + ".yml");
 		this.chestConfig = YamlConfiguration.loadConfiguration(chestFile);
 		
-		this.linkedChests = new ArrayList<RelatedChest>();
-		
 		save();
 	}
 	
-	public MainChest(File chestFile){
+	public RelatedChest(File chestFile){
 		this.chestFile = chestFile;
 		this.chestConfig = YamlConfiguration.loadConfiguration(chestFile);
 		
@@ -60,35 +56,14 @@ public class MainChest{
 		
 		this.chestType = ChestType.valueOf(chestConfig.getString("config.Chest.type"));		
 		
-		this.linkedChests = new ArrayList<RelatedChest>();
+		this.linkedChest = SyncManager.getManager().getMainChest(chestConfig.getInt("config.Chest.linkedChest"));
 		
-		if(this.linked){
-			String linkedString = chestConfig.getString("config.Chest.linkedChests");
-			linkedString = linkedString.replace("[", "").replace("]", "");
-			if(linkedString.contains(",")){
-				for(int i=0;i<linkedString.split(", ").length;i++){
-					linkedChests.add(SyncManager.getManager().getRelatedChest(Integer.parseInt(linkedString.split(", ")[i])));
-				}
-			}else{
-				linkedChests.add(SyncManager.getManager().getRelatedChest(Integer.parseInt(linkedString)));				
-			}
-		}
+		this.chestLoc = new Location(Bukkit.getWorld(chestConfig.getString("config.Chest.Location.world")), chestConfig.getInt("config.Chest.Location.X"), chestConfig.getInt("config.Chest.Location.Y"), chestConfig.getInt("config.Chest.Location.Z"));	
 		
-		this.chestLoc = new Location(Bukkit.getWorld(chestConfig.getString("config.Chest.Location.world")), chestConfig.getInt("config.Chest.Location.X"), chestConfig.getInt("config.Chest.Location.Y"), chestConfig.getInt("config.Chest.Location.Z"));			
 	}
 	
 	void save(){
 		
-		String linkedString = "[";
-		
-		if(getLinkedChests().length!=0){
-			for(int i=0;i<getLinkedChests().length-1;i++){
-				linkedString += getLinkedChests()[i].getID() + ", ";				
-			}			
-			linkedString += getLinkedChests()[getLinkedChests().length-1].getID() + "]";			
-		}else{	
-			linkedString += "]";
-		}
 		
 		try{
 			chestConfig.set("config.Chest.ID", ChestID);
@@ -96,11 +71,15 @@ public class MainChest{
 			chestConfig.set("config.Chest.linked", linked);
 			chestConfig.set("config.Chest.doubleChest", doubleChest);
 			chestConfig.set("config.Chest.doubleChestID", doubleChestID);
-			chestConfig.set("config.Chest.linkedChests", linkedString);
+			chestConfig.set("config.Chest.linkedChest", "");
 			chestConfig.set("config.Chest.Location.world", getWorld().getName());
 			chestConfig.set("config.Chest.Location.X", getX());
 			chestConfig.set("config.Chest.Location.Z", getZ());
 			chestConfig.set("config.Chest.Location.Y", getY());	
+			
+			if(linkedChest!=null){
+				chestConfig.set("config.Chest.linkedChest", linkedChest.getID());
+			}			
 			
 			chestConfig.save(chestFile);
 		}catch(IOException e){
@@ -109,9 +88,7 @@ public class MainChest{
 	}
 	
 	void delete(){
-		for(int i=0;i<linkedChests.size();i++){
-			unLink(linkedChests.get(i));
-		}		
+		unLink();
 		chestFile.delete();
 	}
 	
@@ -120,55 +97,44 @@ public class MainChest{
 		this.doubleChestID = doubleChestID;
 	}
 
-	public void link(RelatedChest relChest){
-		if(!linkedChests.contains(relChest)){
-			this.linkedChests.add(relChest);
-			this.linked = true;
-			if(isDoubleChest()){
-				if(getDoubleChest().isLinked()==false){
-					getDoubleChest().link(relChest);
-				}
+	public void link(MainChest mChest){
+		if(isLinked()){
+			unLink();
+		}
+		
+		this.linkedChest = mChest;
+		this.linked = true;
+			
+		if(isDoubleChest()){
+			if(getDoubleChest().isLinked()==false){
+				getDoubleChest().link(mChest);
 			}
 		}
 	}
 	
-	public void unLink(RelatedChest relChest){
-		if(this.linkedChests.contains(relChest)){	
-			relChest.unLink();
-			linkedChests.remove(relChest);			
-			if(linkedChests.size() == 0){
-				this.linked = false;
-			}
-			if(isDoubleChest()){
-				if(getDoubleChest()!=null){
-					if(getDoubleChest().isLinked()==true){
-						getDoubleChest().unLink(relChest);
-					}
+	public void unLink(){		
+		this.linkedChest = null;
+		this.linked = false;
+		
+		if(isDoubleChest()){
+			if(getDoubleChest()!=null){
+				if(getDoubleChest().isLinked()==true){
+					getDoubleChest().unLink();
 				}
 			}
 		}
-		
 	}
 	
 	public int getID(){
 		return ChestID;
 	}
 	
-	public RelatedChest[] getLinkedChests(){
-		RelatedChest[] chests = new RelatedChest[linkedChests.size()];
-		
-		for(int i=0;i<linkedChests.size();i++){
-			chests[i] = linkedChests.get(i);
-		}		
-		return chests;
+	public MainChest getLinkedChest(){
+		return linkedChest;
 	}
 	
-	public ArrayList<RelatedChest> getLinkedChestsList(){
-		return linkedChests;
-	}
-	
-	public MainChest getDoubleChest(){
-		return SyncManager.getManager().getMainChest(doubleChestID);
+	public RelatedChest getDoubleChest(){
+		return SyncManager.getManager().getRelatedChest(doubleChestID);
 	}
 	
 	public int getDoubleChestID(){
@@ -207,10 +173,9 @@ public class MainChest{
 	public boolean isDoubleChest(){
 		return doubleChest;
 	}
-	
+
 	@Override
 	public String toString(){
-		return ChatColor.GOLD + "MainChest" + getID() + ChatColor.DARK_GRAY + " [" + ChatColor.GREEN + getWorld().getName() + ChatColor.DARK_GRAY + "]" + ChatColor.RESET;
+		return ChatColor.DARK_PURPLE + "RelatedChest" + getID() + ChatColor.DARK_GRAY + " [" + ChatColor.GREEN + getWorld().getName() + ChatColor.DARK_GRAY + "]" + ChatColor.RESET;
 	}
-	
 }

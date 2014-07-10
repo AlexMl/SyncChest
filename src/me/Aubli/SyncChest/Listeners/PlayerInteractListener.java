@@ -2,11 +2,11 @@ package me.Aubli.SyncChest.Listeners;
 
 import java.util.HashMap;
 
-import me.Aubli.SyncChest.SyncManager;
-import me.Aubli.SyncChest.SyncManager.ChestType;
-import me.Aubli.SyncChest.MainChest;
+import me.Aubli.SyncChest.SyncObjects.MainChest;
+import me.Aubli.SyncChest.SyncObjects.RelatedChest;
+import me.Aubli.SyncChest.SyncObjects.SyncManager;
+import me.Aubli.SyncChest.SyncObjects.SyncManager.ChestType;
 import me.Aubli.SyncChest.MessageManager;
-import me.Aubli.SyncChest.RelatedChest;
 import me.Aubli.SyncChest.SyncChest;
 
 import org.bukkit.ChatColor;

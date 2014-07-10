@@ -1,8 +1,11 @@
-package me.Aubli.SyncChest;
+package me.Aubli.SyncChest.SyncObjects;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import me.Aubli.SyncChest.MessageManager;
+import me.Aubli.SyncChest.SyncChest;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

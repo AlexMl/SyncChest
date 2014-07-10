@@ -1,6 +1,6 @@
 package me.Aubli.SyncChest.Listeners;
 
-import me.Aubli.SyncChest.SyncManager;
+import me.Aubli.SyncChest.SyncObjects.SyncManager;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
