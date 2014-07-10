@@ -127,6 +127,7 @@ public class SyncChestCommands implements CommandExecutor{
 								if(mChest!=null) {
 									playerSender.closeInventory();
 									playerSender.openInventory(mChest.getInventory());
+									return true;
 								}else {
 									playerSender.sendMessage(msg.ERROR_CHEST_NOT_AVAILABLE());
 									return true;
