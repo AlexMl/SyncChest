@@ -1,5 +1,5 @@
 name: SyncChest
-version: 1.1.0
+version: 1.1.1
 description: Sync your Chests for Teamgames
 website: http://dev.bukkit.org/bukkit-plugins/SyncChest/
 author: Aubli
@@ -15,6 +15,7 @@ commands:
                /<command> status
                /<command> save
                /<command> reload
+               /<command> open [MainChest-ID]
                /<command> main [amount]
                /<command> related [amount]
                /<command> link [RelatedChest-ID] [MainChest-ID]
