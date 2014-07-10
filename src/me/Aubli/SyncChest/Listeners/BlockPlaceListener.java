@@ -34,7 +34,7 @@ public class BlockPlaceListener implements Listener{
 					if(success){						
 						eventPlayer.sendMessage(msg.get_CHEST_PLACED());
 					}else{
-						eventPlayer.sendMessage(msg.get_CHEST_PLACE_ERROR());
+						eventPlayer.sendMessage(msg.ERROR_CHEST_PLACE());
 					}
 					return;
 				}

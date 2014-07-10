@@ -34,6 +34,7 @@ public class MessageManager {
 	private String chest_remove_error;
 	private String hopper_place_error;
 	private String hopper_remove_error;
+	private String not_a_number;
 	
 	
 	public MessageManager(String language){
@@ -78,7 +79,7 @@ public class MessageManager {
 			messageConfig.set("error.chest_remove_error", "An Error occurred while attempting to remove this chest!");
 			messageConfig.set("error.hopper_placed_error", "An Error occurred while attempting to place this hopper!");
 			messageConfig.set("error.hopper_remove_error", "An Error occurred while attempting to remove this hopper!");
-			
+			messageConfig.set("error.not_a_number", "Only Numbers are allowed here!");
 			
 			messageConfig.save(messageFile);
 		} catch (IOException e) {
@@ -102,7 +103,8 @@ public class MessageManager {
 		this.chest_place_error = messageConfig.getString("error.chest_place_error");
 		this.chest_remove_error = messageConfig.getString("error.chest_remove_error");
 		this.hopper_place_error = messageConfig.getString("error.hopper_placed_error");
-		this.hopper_remove_error = messageConfig.getString("error.hopper_remove_error");		
+		this.hopper_remove_error = messageConfig.getString("error.hopper_remove_error");	
+		this.not_a_number = messageConfig.getString("error.not_a_number");
 	}
 	
 	public static MessageManager getManager(){
@@ -153,27 +155,31 @@ public class MessageManager {
 		return ChatColor.DARK_GRAY + chest_selected;
 	}
 	
-	public String get_NO_PERMISSIONS(){
+	public String ERROR_NO_PERMISSIONS(){
 		return ChatColor.DARK_RED + no_Permissions;
 	}
 	
-	public String get_CHEST_NOT_AVAILABLE(){
+	public String ERROR_CHEST_NOT_AVAILABLE(){
 		return ChatColor.RED + chest_not_available;
 	}
 	
-	public String get_CHEST_PLACE_ERROR(){
+	public String ERROR_CHEST_PLACE(){
 		return ChatColor.RED + chest_place_error;
 	}
 	
-	public String get_CHEST_REMOVE_ERROR(){
+	public String ERROR_CHEST_REMOVE(){
 		return ChatColor.RED + chest_remove_error;
 	}
 	
-	public String get_HOPPER_PLACE_ERROR(){
+	public String ERROR_HOPPER_PLACE(){
 		return ChatColor.RED + hopper_place_error;
 	}
 	
-	public String get_HOPPER_REMOVE_ERROR(){
+	public String ERROR_HOPPER_REMOVE(){
 		return ChatColor.RED + hopper_remove_error;
+	}
+	
+	public String ERROR_NOT_A_NUMBER(){
+		return ChatColor.RED + not_a_number;
 	}
 }

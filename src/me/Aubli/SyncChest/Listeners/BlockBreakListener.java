@@ -44,11 +44,11 @@ public class BlockBreakListener implements Listener {
 					if(success){						
 						eventPlayer.sendMessage(msg.get_CHEST_REMOVED());
 					}else{						
-						eventPlayer.sendMessage(msg.get_CHEST_REMOVE_ERROR());
+						eventPlayer.sendMessage(msg.ERROR_CHEST_REMOVE());
 					}
 					return;		
 				}else{					
-					eventPlayer.sendMessage(msg.get_NO_PERMISSIONS());
+					eventPlayer.sendMessage(msg.ERROR_NO_PERMISSIONS());
 					event.setCancelled(true);
 					return;
 				}
@@ -62,11 +62,11 @@ public class BlockBreakListener implements Listener {
 						eventPlayer.sendMessage(msg.get_HOPPER_REMOVED());						
 						return;
 					}else{
-						eventPlayer.sendMessage(msg.get_HOPPER_REMOVE_ERROR());
+						eventPlayer.sendMessage(msg.ERROR_HOPPER_REMOVE());
 						return;
 					}					
 				}else{
-					eventPlayer.sendMessage(msg.get_NO_PERMISSIONS());
+					eventPlayer.sendMessage(msg.ERROR_NO_PERMISSIONS());
 					event.setCancelled(true);
 					return;
 				}

@@ -62,7 +62,7 @@ public class PlayerInteractListener implements Listener{
 							}
 						}
 					}else{
-						eventPlayer.sendMessage(msg.get_NO_PERMISSIONS());
+						eventPlayer.sendMessage(msg.ERROR_NO_PERMISSIONS());
 						plugin.clearPlayerInventory(eventPlayer);
 						return;
 					}
@@ -125,7 +125,7 @@ public class PlayerInteractListener implements Listener{
 							}
 						}
 					}else{
-						eventPlayer.sendMessage(msg.get_NO_PERMISSIONS());
+						eventPlayer.sendMessage(msg.ERROR_NO_PERMISSIONS());
 						plugin.clearPlayerInventory(eventPlayer);
 						return;
 					}

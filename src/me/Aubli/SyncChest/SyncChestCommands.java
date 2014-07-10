@@ -27,6 +27,7 @@ public class SyncChestCommands implements CommandExecutor{
 		 *  - sc save
 		 *  - sc reload
 		 *  - sc tool
+		 *  - sc open [ID]
 		 *  - sc main [amount]
 		 *  - sc related [amount]
 		 *  - sc link [RelatedChest-ID] [MainChest-ID]
@@ -39,20 +40,20 @@ public class SyncChestCommands implements CommandExecutor{
 		if(sender instanceof Player){
 			Player playerSender = (Player)sender;
 			
-			if(cmd.getName().equalsIgnoreCase("sc")){
+			if(cmd.getName().equalsIgnoreCase("sc") || cmd.getName().equalsIgnoreCase("syncchest")){
 				
 				if(args.length==0){
 					printCommands(playerSender);
 					return true;
 				}
 				
-				if(args.length==1){					
+				if(args.length==1){
 					if(args[0].equalsIgnoreCase("help")){
 						if(playerSender.hasPermission("sc.help")){
 							printCommands(playerSender);
 							return true;
 						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
+							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 							return true;
 						}
 					}
@@ -62,7 +63,7 @@ public class SyncChestCommands implements CommandExecutor{
 							playerSender.getInventory().addItem(plugin.getConnector());
 							return true;
 						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
+							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 							return true;
 						}
 					}
@@ -74,7 +75,7 @@ public class SyncChestCommands implements CommandExecutor{
 							String pluginName = plugin.getDescription().getName();
 							
 							playerSender.sendMessage("\n");	
-							playerSender.sendMessage(ChatColor.GRAY + "---------------------- " + ChatColor.YELLOW + pluginName + " v" + pluginVersion + ChatColor.GRAY + " ------------------------");
+							playerSender.sendMessage(ChatColor.GRAY + "-------------- " + ChatColor.YELLOW + pluginName + " v" + pluginVersion + ChatColor.GRAY + " ----------------");
 							playerSender.sendMessage(ChatColor.GOLD + "MainChests: " + sync.getMainChests().length);
 							playerSender.sendMessage(ChatColor.DARK_PURPLE + "RelatedChests: " + sync.getRelatedChests().length);
 							playerSender.sendMessage(ChatColor.BLUE + "Hoppers: " + sync.getHoppers().length);
@@ -82,7 +83,7 @@ public class SyncChestCommands implements CommandExecutor{
 							
 							return true;
 						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
+							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 							return true;
 						}
 					}
@@ -93,7 +94,7 @@ public class SyncChestCommands implements CommandExecutor{
 							playerSender.sendMessage(msg.get_CONFIG_SAVED());
 							return true;
 						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
+							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 							return true;
 						}
 					}
@@ -104,7 +105,7 @@ public class SyncChestCommands implements CommandExecutor{
 							playerSender.sendMessage(msg.get_CONFIG_RELOADED());
 							return true;
 						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
+							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 							return true;
 						}
 					}
@@ -113,70 +114,103 @@ public class SyncChestCommands implements CommandExecutor{
 					return true;
 				}
 				
-				if(args.length==2){
-					if(playerSender.hasPermission("sc.chests")){
-						if(args[0].equalsIgnoreCase("main")){
-							playerSender.getInventory().addItem(sync.getNewMainChests(Integer.parseInt(args[1])));
-							return true;
+				if(args.length==2){					
+					try {
+						
+						if(args[0].equalsIgnoreCase("open")) {
+							if(playerSender.hasPermission("sc.use")) {
+								
+								int chestID = Integer.parseInt(args[1]);
+								
+								MainChest mChest = SyncManager.getManager().getMainChest(chestID);
+								
+								if(mChest!=null) {
+									playerSender.closeInventory();
+									playerSender.openInventory(mChest.getInventory());
+								}else {
+									playerSender.sendMessage(msg.ERROR_CHEST_NOT_AVAILABLE());
+									return true;
+								}
+							}else {
+								playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
+								return true;
+							}
 						}
 						
-						if(args[0].equalsIgnoreCase("related")){
-							playerSender.getInventory().addItem(sync.getNewRelatedChests(Integer.parseInt(args[1])));
+						if(playerSender.hasPermission("sc.chests")){
+							if(args[0].equalsIgnoreCase("main")){
+								playerSender.getInventory().addItem(sync.getNewMainChests(Integer.parseInt(args[1])));
+								return true;
+							}
+							
+							if(args[0].equalsIgnoreCase("related")){
+								playerSender.getInventory().addItem(sync.getNewRelatedChests(Integer.parseInt(args[1])));
+								return true;
+							}
+							
+							printCommands(playerSender);
+							return true;
+						}else{
+							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 							return true;
 						}
-						
-						printCommands(playerSender);
-						return true;
-					}else{
-						playerSender.sendMessage(msg.get_NO_PERMISSIONS());
+					
+					}catch(NumberFormatException e) {
+						playerSender.sendMessage(msg.ERROR_NOT_A_NUMBER());
 						return true;
 					}
 				}
 				
 				if(args.length==3){
-					if(args[0].equalsIgnoreCase("link")){
-						if(playerSender.hasPermission("sc.link")){
-							MainChest mChest = sync.getMainChest(Integer.parseInt(args[2]));
-							RelatedChest rChest = sync.getRelatedChest(Integer.parseInt(args[1]));
-							
-							if(rChest!=null && mChest!=null){
-								sync.linkChests(rChest, mChest);
-								playerSender.sendMessage(msg.get_CHESTS_LINKED());
-								return true;
+					try {
+						
+						if(args[0].equalsIgnoreCase("link")){
+							if(playerSender.hasPermission("sc.link")){
+								MainChest mChest = sync.getMainChest(Integer.parseInt(args[2]));
+								RelatedChest rChest = sync.getRelatedChest(Integer.parseInt(args[1]));
+								
+								if(rChest!=null && mChest!=null){
+									sync.linkChests(rChest, mChest);
+									playerSender.sendMessage(msg.get_CHESTS_LINKED());
+									return true;
+								}else{
+									playerSender.sendMessage(msg.ERROR_CHEST_NOT_AVAILABLE());
+									return true;
+								}
+								
 							}else{
-								playerSender.sendMessage(msg.get_CHEST_NOT_AVAILABLE());
+								playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 								return true;
 							}
-							
-						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
-							return true;
 						}
-					}
-					
-					if(args[0].equalsIgnoreCase("unlink")){
-						if(playerSender.hasPermission("sc.link")){
-							
-							MainChest mChest = sync.getMainChest(Integer.parseInt(args[2]));
-							RelatedChest rChest = sync.getRelatedChest(Integer.parseInt(args[1]));
-							
-							if(rChest!=null && mChest!=null){
-								sync.unLinkChests(rChest, mChest);
-								playerSender.sendMessage(msg.get_CHESTS_UNLINKED());
-								return true;
+						
+						if(args[0].equalsIgnoreCase("unlink")){
+							if(playerSender.hasPermission("sc.link")){
+								
+								MainChest mChest = sync.getMainChest(Integer.parseInt(args[2]));
+								RelatedChest rChest = sync.getRelatedChest(Integer.parseInt(args[1]));							
+									
+								if(rChest!=null && mChest!=null){
+									sync.unLinkChests(rChest, mChest);
+									playerSender.sendMessage(msg.get_CHESTS_UNLINKED());
+									return true;
+								}else{
+									playerSender.sendMessage(msg.ERROR_CHEST_NOT_AVAILABLE());
+									return true;
+								}
+															
 							}else{
-								playerSender.sendMessage(msg.get_CHEST_NOT_AVAILABLE());
+								playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
 								return true;
 							}
-														
-						}else{
-							playerSender.sendMessage(msg.get_NO_PERMISSIONS());
-							return true;
 						}
+						
+						printCommands(playerSender);
+						return true;	
+					}catch(NumberFormatException e) {
+						playerSender.sendMessage(msg.ERROR_NOT_A_NUMBER());
+						return true;
 					}
-					
-					printCommands(playerSender);
-					return true;				
 				}
 				
 				printCommands(playerSender);
@@ -209,7 +243,7 @@ public class SyncChestCommands implements CommandExecutor{
 			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc unlink [RelatedChest-ID] [MainChest-ID]");
 		
 		}else{
-			playerSender.sendMessage(MessageManager.getManager().get_NO_PERMISSIONS());
+			playerSender.sendMessage(MessageManager.getManager().ERROR_NO_PERMISSIONS());
 			return;
 		}
 	}
