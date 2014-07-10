@@ -237,6 +237,7 @@ public class SyncChestCommands implements CommandExecutor{
 			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc save");
 			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc reload");
 			playerSender.sendMessage(ChatColor.BLUE + "----------------------------");
+			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc open [MainChest-ID]");
 			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc main [amount]");
 			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc related [amount]");
 			playerSender.sendMessage(ChatColor.BLUE + "|" + ChatColor.GRAY + " sc link [RelatedChest-ID] [MainChest-ID]");
