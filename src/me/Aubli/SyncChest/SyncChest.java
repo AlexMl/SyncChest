@@ -11,6 +11,7 @@ import me.Aubli.SyncChest.Listeners.InventoryMoveListener;
 import me.Aubli.SyncChest.Listeners.InventoryOpenListener;
 import me.Aubli.SyncChest.Listeners.PlayerInteractListener;
 import me.Aubli.SyncChest.SyncObjects.SyncManager;
+import net.milkbowl.vault.economy.Economy;
 
 import org.util.Metrics.Metrics;
 import org.util.Metrics.Metrics.Graph;
@@ -22,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 	/*TODO
@@ -41,12 +43,18 @@ public class SyncChest extends JavaPlugin {
 	public static final Logger log = Bukkit.getLogger();
 	private static SyncChest instance;
 
-	public ItemStack connector;	
+	public static ItemStack connector;	
 	
-	public boolean useMetrics = false;	
+	private boolean useMetrics = false;	
 	private boolean enable;
+	private boolean useEcon;
 	
 	public int wandItem;
+	
+	private static double chestPrice;
+	private static double useFee;
+	
+	private static Economy econ;
 	
 	@Override	
 	public void onDisable() {
@@ -88,14 +96,34 @@ public class SyncChest extends JavaPlugin {
 		if(enable){		
 			registerEvents();
 		
-			if(useMetrics==true){
+			if(useMetrics){
 				enableMetrics();
 			}
+			if(useEcon) {
+				boolean success = setupEconomy();
+				if(!success) {
+					log.info("[SyncChest] Vault not found! Skip...");
+					useEcon=false;
+				}
+			}
+			
 			log.info("[SyncChest] Plugin is enabled!");
 		}else{
 			getServer().getPluginManager().disablePlugin(this);
 		}
 	}
+	
+	private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
 	
 	private void enableMetrics(){		
 		try {
@@ -142,8 +170,8 @@ public class SyncChest extends JavaPlugin {
 	}
 		
 	@SuppressWarnings("deprecation")
-	public ItemStack getConnector(){		
-		connector = new ItemStack(this.getConfig().getInt("config.settings.wandItem"));	
+	public static ItemStack getConnector(){		
+		connector = new ItemStack(getInstance().getConfig().getInt("config.settings.wandItem"));	
 		
 		ItemMeta connMeta = connector.getItemMeta();
 		connMeta.setDisplayName("Connector");
@@ -160,6 +188,14 @@ public class SyncChest extends JavaPlugin {
 		return connector;
 	}
 	
+	public static double getChestPrice() {
+		return chestPrice;
+	}
+	
+	public static double getUseFee() {
+		return useFee;
+	}
+	
 	public void clearPlayerInventory(Player playerSender){
 
 		ItemStack mChest = SyncManager.getManager().getNewMainChests(1);
@@ -174,12 +210,20 @@ public class SyncChest extends JavaPlugin {
 	
 		this.getConfig().addDefault("config.settings.enable", true);
 		this.getConfig().addDefault("config.settings.enableMetrics", true);
+		this.getConfig().addDefault("config.settings.useEconomy", false);
 		this.getConfig().addDefault("config.settings.language", "en");
 		this.getConfig().addDefault("config.settings.wandItem", 369);
 		
+		this.getConfig().addDefault("econ.chestPrice", 5.0);
+		this.getConfig().addDefault("econ.useFee", 1.5);
+		
+		useEcon = this.getConfig().getBoolean("config.settings.useEconomy");
 		useMetrics = this.getConfig().getBoolean("config.settings.enableMetrics");
 		enable = this.getConfig().getBoolean("config.settings.enable");
 		wandItem = this.getConfig().getInt("config.settings.wandItem");		
+		
+		chestPrice = this.getConfig().getDouble("econ.chestPrice");
+		useFee = this.getConfig().getDouble("econ.useFee");
 		
 		getConnector();
 		

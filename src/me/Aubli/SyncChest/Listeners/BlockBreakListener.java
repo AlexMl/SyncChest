@@ -22,7 +22,7 @@ public class BlockBreakListener implements Listener {
 		
 		
 		if(event.getPlayer().getItemInHand()!=null){
-			if(event.getPlayer().getItemInHand().equals(SyncChest.getInstance().connector)){
+			if(event.getPlayer().getItemInHand().equals(SyncChest.connector)){
 				event.setCancelled(true);
 				return;
 			}
