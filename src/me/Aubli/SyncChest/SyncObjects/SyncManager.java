@@ -179,8 +179,7 @@ public class SyncManager {
 	
 	public ItemStack getNewMainChests(int amount){
 		
-		ItemStack mStack = new ItemStack(Material.CHEST);
-		mStack.setAmount(amount);
+		ItemStack mStack = new ItemStack(Material.CHEST, amount);
 		
 		ItemMeta mMeta = mStack.getItemMeta();
 		mMeta.setDisplayName("MainChest");
@@ -196,8 +195,7 @@ public class SyncManager {
 	
 	public ItemStack getNewRelatedChests(int amount){
 		
-		ItemStack rStack = new ItemStack(Material.CHEST);
-		rStack.setAmount(amount);
+		ItemStack rStack = new ItemStack(Material.CHEST, amount);
 		
 		ItemMeta rMeta = rStack.getItemMeta();
 		rMeta.setDisplayName("RelatedChest");
