@@ -189,12 +189,20 @@ public class SyncChest extends JavaPlugin {
 		return connector;
 	}
 	
+	public static Economy getEcon() {
+		return econ;
+	}
+	
 	public static double getChestPrice() {
 		return chestPrice;
 	}
 	
 	public static double getUseFee() {
 		return useFee;
+	}
+	
+	public static boolean useEconomy() {
+		return (SyncChest.getInstance().useEcon &&  getEcon()!=null);
 	}
 	
 	public void clearPlayerInventory(Player playerSender){

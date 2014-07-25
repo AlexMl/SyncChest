@@ -3,8 +3,12 @@ package me.Aubli.SyncChest;
 import me.Aubli.SyncChest.SyncObjects.MainChest;
 import me.Aubli.SyncChest.SyncObjects.RelatedChest;
 import me.Aubli.SyncChest.SyncObjects.SyncManager;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -133,13 +137,45 @@ public class SyncChestCommands implements CommandExecutor{
 						}
 						
 						if(playerSender.hasPermission("sc.chests")){
-							if(args[0].equalsIgnoreCase("main")){
-								playerSender.getInventory().addItem(sync.getNewMainChests(Integer.parseInt(args[1])));
+							
+							int amount = Integer.parseInt(args[1]);							
+							OfflinePlayer p = Bukkit.getOfflinePlayer(playerSender.getUniqueId());
+							
+							if((args[0].equalsIgnoreCase("main") || args[0].equalsIgnoreCase("related")) && SyncChest.useEconomy()) {
+								Economy econ = SyncChest.getEcon();
+								if(econ.has(p, SyncChest.getChestPrice()*amount)) {
+									EconomyResponse er = econ.withdrawPlayer(p, SyncChest.getChestPrice()*amount);
+									if(er.transactionSuccess()) {
+										playerSender.sendMessage(String.format(msg.get_TRANSACTION_SUCCESS(), ChatColor.GOLD + "" + amount + "" + ChatColor.GREEN, ChatColor.BLUE + "" + SyncChest.getChestPrice()*amount + " " + econ.currencyNameSingular() + ChatColor.GREEN));
+									}else {
+										playerSender.sendMessage(msg.ERROR_TRANSACTION_ERROR());
+										return true;
+									}
+								}else if(econ.has(p, SyncChest.getChestPrice())) {
+									amount = (int)(econ.getBalance(p)/SyncChest.getChestPrice());
+									
+									if(econ.has(p, amount*SyncChest.getChestPrice())) {
+										EconomyResponse er = econ.withdrawPlayer(p, SyncChest.getChestPrice()*amount);
+										if(er.transactionSuccess()) {
+											playerSender.sendMessage(String.format(msg.get_TRANSACTION_SUCCESS(), amount, SyncChest.getChestPrice()*amount));
+										}else {
+											playerSender.sendMessage(msg.ERROR_TRANSACTION_ERROR());
+											return true;
+										}
+									}									
+								}else {
+									playerSender.sendMessage(msg.ERROR_NOT_ENOUGH_MONEY());
+									return true;
+								}
+							}
+							
+							if(args[0].equalsIgnoreCase("main")){									
+								playerSender.getInventory().addItem(sync.getNewMainChests(amount));
 								return true;
 							}
 							
 							if(args[0].equalsIgnoreCase("related")){
-								playerSender.getInventory().addItem(sync.getNewRelatedChests(Integer.parseInt(args[1])));
+								playerSender.getInventory().addItem(sync.getNewRelatedChests(amount));
 								return true;
 							}
 							
