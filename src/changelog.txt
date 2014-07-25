@@ -1,3 +1,10 @@
+1.2.0:
+	*+Added economy support thru vault api
+
+1.1.1:
+	*+Added Comand to open Chests from chat
+	**Bukkit update
+	
 1.1.0:
 	**Changed Bukkit version to 1.7.9
 

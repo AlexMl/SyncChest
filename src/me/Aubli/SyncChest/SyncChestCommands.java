@@ -3,8 +3,12 @@ package me.Aubli.SyncChest;
 import me.Aubli.SyncChest.SyncObjects.MainChest;
 import me.Aubli.SyncChest.SyncObjects.RelatedChest;
 import me.Aubli.SyncChest.SyncObjects.SyncManager;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,12 +16,6 @@ import org.bukkit.entity.Player;
 
 public class SyncChestCommands implements CommandExecutor{
 
-	private SyncChest plugin;
-	
-	public SyncChestCommands(SyncChest plugin) {
-		this.plugin = plugin;	
-	}	
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {		
 		/*
@@ -60,7 +58,7 @@ public class SyncChestCommands implements CommandExecutor{
 					
 					if(args[0].equalsIgnoreCase("tool")){
 						if(playerSender.hasPermission("sc.tool")){
-							playerSender.getInventory().addItem(plugin.getConnector());
+							playerSender.getInventory().addItem(SyncChest.getConnector());
 							return true;
 						}else{
 							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
@@ -71,8 +69,8 @@ public class SyncChestCommands implements CommandExecutor{
 					if(args[0].equalsIgnoreCase("status")){
 						if(playerSender.hasPermission("sc.status")){
 							
-							String pluginVersion = plugin.getDescription().getVersion();
-							String pluginName = plugin.getDescription().getName();
+							String pluginVersion = SyncChest.getInstance().getDescription().getVersion();
+							String pluginName = SyncChest.getInstance().getDescription().getName();
 							
 							playerSender.sendMessage("\n");	
 							playerSender.sendMessage(ChatColor.GRAY + "-------------- " + ChatColor.YELLOW + pluginName + " v" + pluginVersion + ChatColor.GRAY + " ----------------");
@@ -139,13 +137,45 @@ public class SyncChestCommands implements CommandExecutor{
 						}
 						
 						if(playerSender.hasPermission("sc.chests")){
-							if(args[0].equalsIgnoreCase("main")){
-								playerSender.getInventory().addItem(sync.getNewMainChests(Integer.parseInt(args[1])));
+							
+							int amount = Integer.parseInt(args[1]);							
+							OfflinePlayer p = Bukkit.getOfflinePlayer(playerSender.getUniqueId());
+							
+							if((args[0].equalsIgnoreCase("main") || args[0].equalsIgnoreCase("related")) && SyncChest.useEconomy()) {
+								Economy econ = SyncChest.getEcon();
+								if(econ.has(p, SyncChest.getChestPrice()*amount)) {
+									EconomyResponse er = econ.withdrawPlayer(p, SyncChest.getChestPrice()*amount);
+									if(er.transactionSuccess()) {
+										playerSender.sendMessage(String.format(msg.get_TRANSACTION_SUCCESS(), ChatColor.GOLD + "" + amount + "" + ChatColor.GREEN, ChatColor.BLUE + "" + SyncChest.getChestPrice()*amount + " " + econ.currencyNameSingular() + ChatColor.GREEN));
+									}else {
+										playerSender.sendMessage(msg.ERROR_TRANSACTION_ERROR());
+										return true;
+									}
+								}else if(econ.has(p, SyncChest.getChestPrice())) {
+									amount = (int)(econ.getBalance(p)/SyncChest.getChestPrice());
+									
+									if(econ.has(p, amount*SyncChest.getChestPrice())) {
+										EconomyResponse er = econ.withdrawPlayer(p, SyncChest.getChestPrice()*amount);
+										if(er.transactionSuccess()) {
+											playerSender.sendMessage(String.format(msg.get_TRANSACTION_SUCCESS(), amount, SyncChest.getChestPrice()*amount));
+										}else {
+											playerSender.sendMessage(msg.ERROR_TRANSACTION_ERROR());
+											return true;
+										}
+									}									
+								}else {
+									playerSender.sendMessage(msg.ERROR_NOT_ENOUGH_MONEY());
+									return true;
+								}
+							}
+							
+							if(args[0].equalsIgnoreCase("main")){									
+								playerSender.getInventory().addItem(sync.getNewMainChests(amount));
 								return true;
 							}
 							
 							if(args[0].equalsIgnoreCase("related")){
-								playerSender.getInventory().addItem(sync.getNewRelatedChests(Integer.parseInt(args[1])));
+								playerSender.getInventory().addItem(sync.getNewRelatedChests(amount));
 								return true;
 							}
 							
@@ -227,8 +257,8 @@ public class SyncChestCommands implements CommandExecutor{
 	private void printCommands(Player playerSender){
 		
 		if(playerSender.hasPermission("sc.help")){
-			String pluginVersion = plugin.getDescription().getVersion();
-			String pluginName = plugin.getDescription().getName();
+			String pluginVersion = SyncChest.getInstance().getDescription().getVersion();
+			String pluginName = SyncChest.getInstance().getDescription().getName();
 			
 			playerSender.sendMessage("\n\n");
 			playerSender.sendMessage(ChatColor.BLUE + "|---------- " + pluginName + " v" + pluginVersion + " ----------|");

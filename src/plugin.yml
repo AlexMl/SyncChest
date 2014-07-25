@@ -1,11 +1,14 @@
 name: SyncChest
-version: 1.1.1
+version: 1.2.0
+author: Aubli
 description: Sync your Chests for Teamgames
 website: http://dev.bukkit.org/bukkit-plugins/SyncChest/
-author: Aubli
+
+softdepend: [Vault] 
 main: me.Aubli.SyncChest.SyncChest
 
 commands:
+    syncchest:
     sc:
         description: SyncChest Commands!
         usage: |
