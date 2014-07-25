@@ -12,12 +12,6 @@ import org.bukkit.entity.Player;
 
 public class SyncChestCommands implements CommandExecutor{
 
-	private SyncChest plugin;
-	
-	public SyncChestCommands(SyncChest plugin) {
-		this.plugin = plugin;	
-	}	
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {		
 		/*
@@ -60,7 +54,7 @@ public class SyncChestCommands implements CommandExecutor{
 					
 					if(args[0].equalsIgnoreCase("tool")){
 						if(playerSender.hasPermission("sc.tool")){
-							playerSender.getInventory().addItem(plugin.getConnector());
+							playerSender.getInventory().addItem(SyncChest.getConnector());
 							return true;
 						}else{
 							playerSender.sendMessage(msg.ERROR_NO_PERMISSIONS());
@@ -71,8 +65,8 @@ public class SyncChestCommands implements CommandExecutor{
 					if(args[0].equalsIgnoreCase("status")){
 						if(playerSender.hasPermission("sc.status")){
 							
-							String pluginVersion = plugin.getDescription().getVersion();
-							String pluginName = plugin.getDescription().getName();
+							String pluginVersion = SyncChest.getInstance().getDescription().getVersion();
+							String pluginName = SyncChest.getInstance().getDescription().getName();
 							
 							playerSender.sendMessage("\n");	
 							playerSender.sendMessage(ChatColor.GRAY + "-------------- " + ChatColor.YELLOW + pluginName + " v" + pluginVersion + ChatColor.GRAY + " ----------------");
@@ -227,8 +221,8 @@ public class SyncChestCommands implements CommandExecutor{
 	private void printCommands(Player playerSender){
 		
 		if(playerSender.hasPermission("sc.help")){
-			String pluginVersion = plugin.getDescription().getVersion();
-			String pluginName = plugin.getDescription().getName();
+			String pluginVersion = SyncChest.getInstance().getDescription().getVersion();
+			String pluginName = SyncChest.getInstance().getDescription().getName();
 			
 			playerSender.sendMessage("\n\n");
 			playerSender.sendMessage(ChatColor.BLUE + "|---------- " + pluginName + " v" + pluginVersion + " ----------|");

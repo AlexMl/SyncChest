@@ -90,7 +90,8 @@ public class SyncChest extends JavaPlugin {
 			log.info("[SyncChest] Chest file converted successfully!");
 		}		
 		
-		getCommand("sc").setExecutor(new SyncChestCommands(this));		
+		getCommand("sc").setExecutor(new SyncChestCommands());	
+		getCommand("syncchest").setExecutor(new SyncChestCommands());
 		loadConfig();
 		
 		if(enable){		
