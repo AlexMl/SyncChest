@@ -8,6 +8,7 @@ softdepend: [Vault]
 main: me.Aubli.SyncChest.SyncChest
 
 commands:
+    syncchest:
     sc:
         description: SyncChest Commands!
         usage: |
