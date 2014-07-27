@@ -25,9 +25,11 @@ public class BlockPlaceListener implements Listener{
 			if(eventPlayer.hasPermission("sc.chests")){	
 				if(event.getItemInHand().getType()==Material.CHEST && event.getItemInHand().hasItemMeta() && event.getItemInHand().getItemMeta().hasDisplayName()){
 					
-					if(event.getItemInHand().equals(SyncManager.getManager().getNewMainChests(1))){
+					int amount = event.getItemInHand().getAmount();
+					
+					if(event.getItemInHand().equals(SyncManager.getManager().getNewMainChests(amount))){
 						success = SyncManager.getManager().addChest(ChestType.MAIN, event.getBlock().getLocation());
-					}else if(event.getItemInHand().equals(SyncManager.getManager().getNewRelatedChests(1))){
+					}else if(event.getItemInHand().equals(SyncManager.getManager().getNewRelatedChests(amount))){
 						success = SyncManager.getManager().addChest(ChestType.RELATED, event.getBlock().getLocation());
 					}
 				
