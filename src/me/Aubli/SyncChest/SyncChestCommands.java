@@ -157,7 +157,7 @@ public class SyncChestCommands implements CommandExecutor{
 									if(econ.has(p, amount*SyncChest.getChestPrice())) {
 										EconomyResponse er = econ.withdrawPlayer(p, SyncChest.getChestPrice()*amount);
 										if(er.transactionSuccess()) {
-											playerSender.sendMessage(String.format(msg.get_TRANSACTION_SUCCESS(), amount, SyncChest.getChestPrice()*amount));
+											playerSender.sendMessage(String.format(msg.get_TRANSACTION_SUCCESS(), ChatColor.GOLD + "" + amount + "" + ChatColor.GREEN, ChatColor.BLUE + "" + SyncChest.getChestPrice()*amount + " " + econ.currencyNameSingular() + ChatColor.GREEN));
 										}else {
 											playerSender.sendMessage(msg.ERROR_TRANSACTION_ERROR());
 											return true;
