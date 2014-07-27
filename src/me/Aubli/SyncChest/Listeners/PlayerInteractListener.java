@@ -33,7 +33,7 @@ public class PlayerInteractListener implements Listener{
 		
 		if(event.getAction()==Action.LEFT_CLICK_BLOCK){
 			if(event.getItem()!=null){
-				if(event.getItem().equals(SyncChest.connector)){
+				if(event.getItem().isSimilar(SyncChest.connector)){
 					if(eventPlayer.hasPermission("sc.tool")){	
 						if(event.getClickedBlock().getType().equals(Material.CHEST)){
 							if(event.getClickedBlock().getState() instanceof Chest){
@@ -72,7 +72,7 @@ public class PlayerInteractListener implements Listener{
 		
 		if(event.getAction()==Action.RIGHT_CLICK_BLOCK){
 			if(event.getItem()!=null){
-				if(event.getItem().equals(SyncChest.connector)){
+				if(event.getItem().isSimilar(SyncChest.connector)){
 					if(eventPlayer.hasPermission("sc.tool")){
 						event.setCancelled(true);
 						
