@@ -210,9 +210,14 @@ public class SyncChest extends JavaPlugin {
 		ItemStack mChest = SyncManager.getManager().getNewMainChests(1);
 		ItemStack rChest = SyncManager.getManager().getNewRelatedChests(1);
 		
-		playerSender.getInventory().removeItem(mChest);
-		playerSender.getInventory().removeItem(rChest);
-		playerSender.getInventory().removeItem(connector);
+		for(int i=0; i<playerSender.getInventory().getSize(); i++) {
+			if(playerSender.getInventory().getItem(i)!=null) {
+				ItemStack item = playerSender.getInventory().getItem(i);
+				if(item.isSimilar(mChest) || item.isSimilar(rChest) || item.isSimilar(connector)) {
+					playerSender.getInventory().clear(i);
+				}
+			}
+		}
 	}
 	
 	private void loadConfig(){
