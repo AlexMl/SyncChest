@@ -1,3 +1,9 @@
+1.2.2:
+	**Fixed color issue
+
+1.2.1:
+	**Fixed stack size bug
+
 1.2.0:
 	*+Added economy support thru vault api
 
