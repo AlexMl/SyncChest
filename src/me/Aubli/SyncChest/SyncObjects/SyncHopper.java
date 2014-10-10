@@ -2,6 +2,7 @@ package me.Aubli.SyncChest.SyncObjects;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -59,9 +60,9 @@ public class SyncHopper {
 		
 		this.HopperID = hopperConfig.getInt("config.Hopper.ID");
 		
-		this.hopperLoc = new Location(Bukkit.getWorld(hopperConfig.getString("config.Hopper.Location.world")), hopperConfig.getInt("config.Hopper.Location.X"), hopperConfig.getInt("config.Hopper.Location.Y"), hopperConfig.getInt("config.Hopper.Location.Z"));
-		this.destLoc = new Location(Bukkit.getWorld(hopperConfig.getString("config.Hopper.Location.Destination.world")), hopperConfig.getInt("config.Hopper.Location.Destination.X"), hopperConfig.getInt("config.Hopper.Location.Destination.Y"), hopperConfig.getInt("config.Hopper.Location.Destination.Z"));
-		this.sourceLoc = new Location(Bukkit.getWorld(hopperConfig.getString("config.Hopper.Location.Source.world")), hopperConfig.getInt("config.Hopper.Location.Source.X"), hopperConfig.getInt("config.Hopper.Location.Source.Y"), hopperConfig.getInt("config.Hopper.Location.Source.Z"));
+		this.hopperLoc = new Location(Bukkit.getWorld(UUID.fromString(hopperConfig.getString("config.Hopper.Location.world"))), hopperConfig.getInt("config.Hopper.Location.X"), hopperConfig.getInt("config.Hopper.Location.Y"), hopperConfig.getInt("config.Hopper.Location.Z"));
+		this.destLoc = new Location(Bukkit.getWorld(UUID.fromString(hopperConfig.getString("config.Hopper.Location.Destination.world"))), hopperConfig.getInt("config.Hopper.Location.Destination.X"), hopperConfig.getInt("config.Hopper.Location.Destination.Y"), hopperConfig.getInt("config.Hopper.Location.Destination.Z"));
+		this.sourceLoc = new Location(Bukkit.getWorld(UUID.fromString(hopperConfig.getString("config.Hopper.Location.Source.world"))), hopperConfig.getInt("config.Hopper.Location.Source.X"), hopperConfig.getInt("config.Hopper.Location.Source.Y"), hopperConfig.getInt("config.Hopper.Location.Source.Z"));
 		
 		if(hopperLoc.getWorld()!=null){
 			this.hopper = (Hopper)hopperLoc.getBlock().getState();
@@ -78,17 +79,17 @@ public class SyncHopper {
 		try {			
 			hopperConfig.set("config.Hopper.ID", HopperID);
 			
-			hopperConfig.set("config.Hopper.Location.world", hopperLoc.getWorld().getName());
+			hopperConfig.set("config.Hopper.Location.world", hopperLoc.getWorld().getUID().toString());
 			hopperConfig.set("config.Hopper.Location.X", hopperLoc.getBlockX());
 			hopperConfig.set("config.Hopper.Location.Y", hopperLoc.getBlockY());
 			hopperConfig.set("config.Hopper.Location.Z", hopperLoc.getBlockZ());		
 			
-			hopperConfig.set("config.Hopper.Location.Destination.world", destLoc.getWorld().getName());
+			hopperConfig.set("config.Hopper.Location.Destination.world", destLoc.getWorld().getUID().toString());
 			hopperConfig.set("config.Hopper.Location.Destination.X", destLoc.getBlockX());
 			hopperConfig.set("config.Hopper.Location.Destination.Y", destLoc.getBlockY());
 			hopperConfig.set("config.Hopper.Location.Destination.Z", destLoc.getBlockZ());
 			
-			hopperConfig.set("config.Hopper.Location.Source.world", sourceLoc.getWorld().getName());
+			hopperConfig.set("config.Hopper.Location.Source.world", sourceLoc.getWorld().getUID().toString());
 			hopperConfig.set("config.Hopper.Location.Source.X", sourceLoc.getBlockX());
 			hopperConfig.set("config.Hopper.Location.Source.Y", sourceLoc.getBlockY());
 			hopperConfig.set("config.Hopper.Location.Source.Z", sourceLoc.getBlockZ());

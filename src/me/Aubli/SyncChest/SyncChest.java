@@ -72,6 +72,13 @@ public class SyncChest extends JavaPlugin {
 		String language;
 		instance = this;
 		
+		ChestFileConverter cfc = new ChestFileConverter();
+		if(cfc.worldsInNames()) {
+			log.info("[SyncChest] Found old Chest file! Converting ...");
+			cfc.convertToUUID();
+			log.info("[SyncChest] Chest file converted successfully!");
+		}
+		
 		if(getConfig().get("config.settings.language")==null){
 			language = "en";
 		}else if(!getConfig().getString("config.settings.language").isEmpty()){
@@ -83,7 +90,7 @@ public class SyncChest extends JavaPlugin {
 		new MessageManager(language);
 		new SyncManager();
 		
-		ChestFileConverter cfc = new ChestFileConverter();
+		
 		if(cfc.chestFileExists()){
 			log.info("[SyncChest] Found old Chest file! Converting ...");
 			cfc.convert();

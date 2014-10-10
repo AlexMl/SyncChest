@@ -2,6 +2,7 @@ package me.Aubli.SyncChest.SyncObjects;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import me.Aubli.SyncChest.SyncObjects.SyncManager.ChestType;
 
@@ -58,7 +59,7 @@ public class RelatedChest{
 		
 		this.linkedChest = SyncManager.getManager().getMainChest(chestConfig.getInt("config.Chest.linkedChest"));
 		
-		this.chestLoc = new Location(Bukkit.getWorld(chestConfig.getString("config.Chest.Location.world")), chestConfig.getInt("config.Chest.Location.X"), chestConfig.getInt("config.Chest.Location.Y"), chestConfig.getInt("config.Chest.Location.Z"));	
+		this.chestLoc = new Location(Bukkit.getWorld(UUID.fromString(chestConfig.getString("config.Chest.Location.world"))), chestConfig.getInt("config.Chest.Location.X"), chestConfig.getInt("config.Chest.Location.Y"), chestConfig.getInt("config.Chest.Location.Z"));	
 		
 	}
 	
@@ -72,7 +73,7 @@ public class RelatedChest{
 			chestConfig.set("config.Chest.doubleChest", doubleChest);
 			chestConfig.set("config.Chest.doubleChestID", doubleChestID);
 			chestConfig.set("config.Chest.linkedChest", "");
-			chestConfig.set("config.Chest.Location.world", getWorld().getName());
+			chestConfig.set("config.Chest.Location.world", getWorld().getUID().toString());
 			chestConfig.set("config.Chest.Location.X", getX());
 			chestConfig.set("config.Chest.Location.Z", getZ());
 			chestConfig.set("config.Chest.Location.Y", getY());	

@@ -1,6 +1,8 @@
 package org.util.tools;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
@@ -35,6 +37,124 @@ public class ChestFileConverter {
 		}else{
 			return false;
 		}
+	}
+	
+	public boolean worldsInNames() {
+		
+		File mainChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Main");
+		File relatedChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Related");
+		File hopperFolder = new File(plugin.getDataFolder().getPath() + "/Hoppers");
+		
+		FileConfiguration tempConf;
+		
+		for(File f : mainChestFolder.listFiles()) {
+			tempConf = YamlConfiguration.loadConfiguration(f);
+			
+			try {
+				//System.out.println(f.toString() + " : " + tempConf.getString("config.Chest.Location.world"));
+				UUID.fromString(tempConf.getString("config.Chest.Location.world"));
+			}catch(IllegalArgumentException e) {
+				return true;
+			}
+		}
+		
+		for(File f : relatedChestFolder.listFiles()) {
+			tempConf = YamlConfiguration.loadConfiguration(f);
+			
+			try {
+				//System.out.println(f.toString() + " : " + tempConf.getString("config.Chest.Location.world"));
+				UUID.fromString(tempConf.getString("config.Chest.Location.world"));
+			}catch(IllegalArgumentException e) {
+				return true;
+			}
+		}
+		
+		for(File f : hopperFolder.listFiles()) {
+			tempConf = YamlConfiguration.loadConfiguration(f);
+			
+			try {
+				//System.out.println(f.toString() + " : " + tempConf.getString("config.Hopper.Location.world"));
+				UUID.fromString(tempConf.getString("config.Hopper.Location.world"));
+				UUID.fromString(tempConf.getString("config.Hopper.Location.Destination.world"));
+				UUID.fromString(tempConf.getString("config.Hopper.Location.Source.world"));
+			}catch(IllegalArgumentException e) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void convertToUUID() {
+		
+		if(worldsInNames()) {
+			File mainChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Main");
+			File relatedChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Related");
+			File hopperFolder = new File(plugin.getDataFolder().getPath() + "/Hoppers");
+			
+			FileConfiguration tempConf;
+			
+				try {
+				
+				for(File f : mainChestFolder.listFiles()) {
+					tempConf = YamlConfiguration.loadConfiguration(f);
+					String world = "";
+					try {
+						world = tempConf.getString("config.Chest.Location.world");
+						//System.out.println(f.toString() + " : " + world);
+						UUID.fromString(world);
+					}catch(IllegalArgumentException e) {
+						//System.out.println(Bukkit.getWorld(world).getUID());
+						tempConf.set("config.Chest.Location.world", Bukkit.getWorld(world).getUID().toString());					
+						tempConf.save(f);
+					}
+				}
+				
+				for(File f : relatedChestFolder.listFiles()) {
+					tempConf = YamlConfiguration.loadConfiguration(f);
+					String world = "";
+					try {
+						world = tempConf.getString("config.Chest.Location.world");
+						//System.out.println(f.toString() + " : " + world);
+						UUID.fromString(world);
+					}catch(IllegalArgumentException e) {
+						tempConf.set("config.Chest.Location.world", Bukkit.getWorld(world).getUID().toString());					
+						tempConf.save(f);
+					}
+				}
+				
+				for(File f : hopperFolder.listFiles()) {
+					tempConf = YamlConfiguration.loadConfiguration(f);
+					String world = "";
+					try {
+						world = tempConf.getString("config.Hopper.Location.world");
+						//System.out.println(f.toString() + " : " + world);
+						UUID.fromString(world);
+					}catch(IllegalArgumentException e) {
+						tempConf.set("config.Hopper.Location.world", Bukkit.getWorld(world).getUID().toString());					
+						tempConf.save(f);
+					}
+					try {
+						world = tempConf.getString("config.Hopper.Location.Destination.world");
+						//System.out.println(f.toString() + " : " + world);
+						UUID.fromString(world);
+					}catch(IllegalArgumentException e) {
+						tempConf.set("config.Hopper.Location.Destination.world", Bukkit.getWorld(world).getUID().toString());					
+						tempConf.save(f);
+					}
+					try {
+						world = tempConf.getString("config.Hopper.Location.Source.world");
+						//System.out.println(f.toString() + " : " + world);
+						UUID.fromString(world);
+					}catch(IllegalArgumentException e) {
+						tempConf.set("config.Hopper.Location.Source.world", Bukkit.getWorld(world).getUID().toString());					
+						tempConf.save(f);
+					}
+				}
+				}catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			
+		}		
 	}
 	
 	public void convert(){
