@@ -2,7 +2,6 @@ package me.Aubli.SyncChest;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import me.Aubli.SyncChest.Listeners.BlockBreakListener;
 import me.Aubli.SyncChest.Listeners.BlockPlaceListener;
@@ -29,7 +28,6 @@ import org.util.tools.ChestFileConverter;
 
 public class SyncChest extends JavaPlugin {
     
-    public static final Logger log = Bukkit.getLogger();
     private static SyncChest instance;
     
     public static ItemStack connector;
@@ -53,7 +51,7 @@ public class SyncChest extends JavaPlugin {
 	    clearPlayerInventory(player);
 	}
 	
-	log.info("[SyncChest] Plugin is disabled!");
+	getLogger().info("Plugin is disabled!");
     }
     
     @Override
@@ -61,12 +59,7 @@ public class SyncChest extends JavaPlugin {
 	String language;
 	instance = this;
 	
-	ChestFileConverter cfc = new ChestFileConverter();
-	if (cfc.worldsInNames()) {
-	    log.info("[SyncChest] Found old Chest file! Converting ...");
-	    cfc.convertToUUID();
-	    log.info("[SyncChest] Chest file converted successfully!");
-	}
+	loadConfig();
 	
 	if (getConfig().get("config.settings.language") == null) {
 	    language = "en";
@@ -79,15 +72,16 @@ public class SyncChest extends JavaPlugin {
 	new MessageManager(language);
 	new SyncManager();
 	
-	if (cfc.chestFileExists()) {
-	    log.info("[SyncChest] Found old Chest file! Converting ...");
+	ChestFileConverter cfc = new ChestFileConverter();
+	if (cfc.worldsInNames() || cfc.chestFileExists()) {
+	    getLogger().info("Found old Chest file! Converting ...");
 	    cfc.convert();
-	    log.info("[SyncChest] Chest file converted successfully!");
+	    cfc.convertToUUID();
+	    getLogger().info("Chest file converted successfully!");
 	}
 	
 	getCommand("sc").setExecutor(new SyncChestCommands());
 	getCommand("syncchest").setExecutor(new SyncChestCommands());
-	loadConfig();
 	
 	if (this.enable) {
 	    registerEvents();
@@ -98,12 +92,12 @@ public class SyncChest extends JavaPlugin {
 	    if (this.useEcon) {
 		boolean success = setupEconomy();
 		if (!success) {
-		    log.info("[SyncChest] Vault not found! Skip...");
+		    getLogger().info("Vault not found! Skip...");
 		    this.useEcon = false;
 		}
 	    }
 	    
-	    log.info("[SyncChest] Plugin is enabled!");
+	    getLogger().info("Plugin is enabled!");
 	} else {
 	    getServer().getPluginManager().disablePlugin(this);
 	}
@@ -146,7 +140,7 @@ public class SyncChest extends JavaPlugin {
 	    
 	    metrics.start();
 	} catch (IOException e) {
-	    log.info("[SyncChest] Can't start Metrics! Skip!");
+	    getLogger().info("Can't start Metrics! Skip!");
 	}
     }
     
