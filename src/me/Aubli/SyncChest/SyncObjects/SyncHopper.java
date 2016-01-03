@@ -34,7 +34,7 @@ public class SyncHopper {
 	private ItemStack item;
 	
 	public SyncHopper(String hopperPath, int ID, Location hopperLoc, Location source, Location dest){
-		this.hopperFile = new File(hopperPath + "/" + ID + ".yml");
+		this.hopperFile = new File(hopperPath + File.separator + ID + ".yml");
 		this.hopperConfig = YamlConfiguration.loadConfiguration(hopperFile);
 		
 		this.HopperID = ID;
