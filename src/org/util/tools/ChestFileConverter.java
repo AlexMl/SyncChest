@@ -30,7 +30,7 @@ public class ChestFileConverter {
 	}
 	
 	public boolean chestFileExists(){		
-		File chestFile = new File(plugin.getDataFolder().getPath() + "/chests.yml");
+		File chestFile = new File(plugin.getDataFolder().getPath() + File.separator + "chests.yml");
 		
 		if(chestFile.exists()){
 			return true;
@@ -41,9 +41,9 @@ public class ChestFileConverter {
 	
 	public boolean worldsInNames() {
 		
-		File mainChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Main");
-		File relatedChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Related");
-		File hopperFolder = new File(plugin.getDataFolder().getPath() + "/Hoppers");
+		File mainChestFolder = new File(plugin.getDataFolder().getPath() + File.separator + "Chests" + File.separator + "Main");
+		File relatedChestFolder = new File(plugin.getDataFolder().getPath() + File.separator + "Chests" + File.separator + "Related");
+		File hopperFolder = new File(plugin.getDataFolder().getPath() + File.separator + "Hoppers");
 		
 		FileConfiguration tempConf;
 		
@@ -87,9 +87,9 @@ public class ChestFileConverter {
 	public void convertToUUID() {
 		
 		if(worldsInNames()) {
-			File mainChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Main");
-			File relatedChestFolder = new File(plugin.getDataFolder().getPath() + "/Chests/Related");
-			File hopperFolder = new File(plugin.getDataFolder().getPath() + "/Hoppers");
+			File mainChestFolder = new File(plugin.getDataFolder().getPath() + File.separator + "Chests" + File.separator + "Main");
+			File relatedChestFolder = new File(plugin.getDataFolder().getPath() + File.separator + "Chests" + File.separator + "Related");
+			File hopperFolder = new File(plugin.getDataFolder().getPath() + File.separator + "Hoppers");
 			
 			FileConfiguration tempConf;
 			
@@ -160,7 +160,7 @@ public class ChestFileConverter {
 	public void convert(){
 		if(chestFileExists()){
 			
-			File chestFile = new File(plugin.getDataFolder().getPath() + "/chests.yml");
+			File chestFile = new File(plugin.getDataFolder().getPath() + File.separator + "chests.yml");
 			FileConfiguration chestConfig = YamlConfiguration.loadConfiguration(chestFile);
 			
 			World world;
@@ -273,7 +273,7 @@ public class ChestFileConverter {
 					}
 				}
 			}
-			chestFile.renameTo(new File(plugin.getDataFolder().getPath() + "/chests.old.yml"));
+			chestFile.renameTo(new File(plugin.getDataFolder().getPath() + File.separator + "chests.old.yml"));
 			return;
 		}
 	}
