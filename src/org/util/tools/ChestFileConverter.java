@@ -23,11 +23,12 @@ public class ChestFileConverter {
     private SyncChest plugin;
     private SyncManager sync;
     
-    private static final Logger log = Bukkit.getLogger();
+    private Logger log;
     
     public ChestFileConverter() {
 	this.plugin = SyncChest.getInstance();
 	this.sync = SyncManager.getManager();
+	this.log = this.plugin.getLogger();
     }
     
     public boolean chestFileExists() {
@@ -184,9 +185,9 @@ public class ChestFileConverter {
 		    success = this.sync.addChest(ChestType.MAIN, chestLoc);
 		    
 		    if (success) {
-			log.info("[SyncChest] MainChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			this.log.info("MainChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 		    } else {
-			log.info("[SyncChest] Error: Can't add MainChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			this.log.info("Error: Can't add MainChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 		    }
 		    
 		    if (chestConfig.getBoolean("config.mem.mainChests." + i + ".doubleChest") == true) {
@@ -200,9 +201,9 @@ public class ChestFileConverter {
 			success = this.sync.addChest(ChestType.MAIN, chestLoc);
 			
 			if (success) {
-			    log.info("[SyncChest] MainChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			    this.log.info("MainChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 			} else {
-			    log.info("[SyncChest] Error: Can't add MainChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			    this.log.severe("Error: Can't add MainChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 			}
 		    }
 		}
@@ -221,9 +222,9 @@ public class ChestFileConverter {
 		    success = this.sync.addChest(ChestType.RELATED, chestLoc);
 		    
 		    if (success) {
-			log.info("[SyncChest] RelatedChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			this.log.info("RelatedChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 		    } else {
-			log.info("[SyncChest] Error: Can't add RelatedChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			this.log.severe("Error: Can't add RelatedChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 		    }
 		    
 		    if (chestConfig.getBoolean("config.mem.relatedChests." + i + ".doubleChest") == true) {
@@ -237,9 +238,9 @@ public class ChestFileConverter {
 			success = this.sync.addChest(ChestType.RELATED, chestLoc);
 			
 			if (success) {
-			    log.info("[SyncChest] RelatedChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			    this.log.info("RelatedChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 			} else {
-			    log.info("[SyncChest] Error: Can't add RelatedChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			    this.log.severe("Error: Can't add RelatedChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 			}
 		    }
 		    
@@ -263,9 +264,9 @@ public class ChestFileConverter {
 				    
 				    if (mChest != null && rChest != null) {
 					this.sync.linkChests(rChest, mChest);
-					log.info("[SyncChest] " + rChest.toString() + " is now linked to " + mChest.toString());
+					this.log.info(rChest.toString() + " is now linked to " + mChest.toString());
 				    } else {
-					log.info("[SyncChest] Error: Chests don't exists!");
+					this.log.severe("Error: Chests don't exists!");
 				    }
 				}
 			    }
