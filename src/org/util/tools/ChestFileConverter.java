@@ -177,6 +177,11 @@ public class ChestFileConverter {
 		    
 		    world = Bukkit.getWorld(chestConfig.getString("config.mem.mainChests." + i + ".world"));
 		    
+		    if (world == null) {
+			this.log.severe("Can not find World " + chestConfig.getString("config.mem.mainChests." + i + ".world") + "! Is it loaded?");
+			return;
+		    }
+		    
 		    x = chestConfig.getInt("config.mem.mainChests." + i + ".X");
 		    y = chestConfig.getInt("config.mem.mainChests." + i + ".Y");
 		    z = chestConfig.getInt("config.mem.mainChests." + i + ".Z");
@@ -191,7 +196,6 @@ public class ChestFileConverter {
 		    }
 		    
 		    if (chestConfig.getBoolean("config.mem.mainChests." + i + ".doubleChest") == true) {
-			world = Bukkit.getWorld(chestConfig.getString("config.mem.mainChests." + i + ".world"));
 			
 			x = chestConfig.getInt("config.mem.mainChests." + i + ".coChest.X");
 			y = chestConfig.getInt("config.mem.mainChests." + i + ".coChest.Y");
@@ -214,6 +218,11 @@ public class ChestFileConverter {
 		    
 		    world = Bukkit.getWorld(chestConfig.getString("config.mem.relatedChests." + i + ".world"));
 		    
+		    if (world == null) {
+			this.log.severe("Can not find World " + chestConfig.getString("config.mem.mainChests." + i + ".world") + "! Is it loaded?");
+			return;
+		    }
+		    
 		    x = chestConfig.getInt("config.mem.relatedChests." + i + ".X");
 		    y = chestConfig.getInt("config.mem.relatedChests." + i + ".Y");
 		    z = chestConfig.getInt("config.mem.relatedChests." + i + ".Z");
@@ -229,6 +238,11 @@ public class ChestFileConverter {
 		    
 		    if (chestConfig.getBoolean("config.mem.relatedChests." + i + ".doubleChest") == true) {
 			world = Bukkit.getWorld(chestConfig.getString("config.mem.relatedChests." + i + ".world"));
+			
+			if (world == null) {
+			    this.log.severe("Can not find World " + chestConfig.getString("config.mem.relatedChests." + i + ".world") + "! Is it loaded?");
+			    return;
+			}
 			
 			x = chestConfig.getInt("config.mem.relatedChests." + i + ".coChest.X");
 			y = chestConfig.getInt("config.mem.relatedChests." + i + ".coChest.Y");
@@ -251,6 +265,11 @@ public class ChestFileConverter {
 			    if (chestConfig.get("config.mem.mainChests." + k + ".name") != null) {
 				if (chestConfig.get("config.mem.mainChests." + k + ".name").equals(linkedChestName)) {
 				    world = Bukkit.getWorld(chestConfig.getString("config.mem.mainChests." + k + ".world"));
+				    
+				    if (world == null) {
+					this.log.severe("Can not find World " + chestConfig.getString("config.mem.mainChests." + k + ".world") + "! Is it loaded?");
+					return;
+				    }
 				    
 				    x = chestConfig.getInt("config.mem.mainChests." + k + ".X");
 				    y = chestConfig.getInt("config.mem.mainChests." + k + ".Y");

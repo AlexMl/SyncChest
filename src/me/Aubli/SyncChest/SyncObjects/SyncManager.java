@@ -384,6 +384,11 @@ public class SyncManager {
 	
 	int ChestID = getNewID(chest);
 	
+	if (loc == null || loc.getWorld() == null) {
+	    SyncChest.getInstance().getLogger().warning("Not a valid location!");
+	    return false;
+	}
+	
 	for (int i = 0; i < getChests(chest).length; i++) {
 	    if (getChests(chest)[i] instanceof MainChest) {
 		MainChest mChest = (MainChest) getChests(chest)[i];
