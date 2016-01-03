@@ -27,18 +27,6 @@ import org.util.Metrics.Metrics.Graph;
 import org.util.tools.ChestFileConverter;
 
 
-/*TODO
- * 
- * - Hopper zum laufen bringen			+
- * - Feinschliff
- * - metrics eigene diagramme			+
- * - einige bugs ausbügeln
- * - plugin.yml commands				+
- * - mainchest linked chests			+
- * - chestfile converter				+
- * - sc status command 					+
- */
-
 public class SyncChest extends JavaPlugin {
     
     public static final Logger log = Bukkit.getLogger();
