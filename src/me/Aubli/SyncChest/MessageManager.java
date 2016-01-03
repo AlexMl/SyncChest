@@ -51,6 +51,7 @@ public class MessageManager {
 	
 	if (!this.messageFile.exists() || isOutdated()) {
 	    try {
+		this.messageFile.getParentFile().mkdirs();
 		this.messageFile.createNewFile();
 	    } catch (IOException e) {
 		e.printStackTrace();
