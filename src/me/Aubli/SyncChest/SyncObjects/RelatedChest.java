@@ -32,7 +32,7 @@ public class RelatedChest {
     private ChestType chestType;
     
     public RelatedChest(String chestPath, ChestType type, Location chestLoc, int ID, boolean doubleChest) {
-	this.chestLoc = chestLoc;
+	this.chestLoc = chestLoc.clone();
 	this.ChestID = ID;
 	this.doubleChest = doubleChest;
 	this.chestType = type;
