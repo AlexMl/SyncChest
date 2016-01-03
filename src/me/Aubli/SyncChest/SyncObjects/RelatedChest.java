@@ -39,7 +39,7 @@ public class RelatedChest{
 		this.linked = false;
 		this.doubleChest = false;
 		
-		this.chestFile = new File(chestPath + "/" + ChestID + ".yml");
+		this.chestFile = new File(chestPath + File.separator + ChestID + ".yml");
 		this.chestConfig = YamlConfiguration.loadConfiguration(chestFile);
 		
 		save();
