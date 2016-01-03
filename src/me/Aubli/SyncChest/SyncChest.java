@@ -75,9 +75,14 @@ public class SyncChest extends JavaPlugin {
 	ChestFileConverter cfc = new ChestFileConverter();
 	if (cfc.worldsInNames() || cfc.chestFileExists()) {
 	    getLogger().info("Found old Chest file! Converting ...");
-	    cfc.convert();
+	    boolean success = cfc.convert();
 	    cfc.convertToUUID();
-	    getLogger().info("Chest file converted successfully!");
+	    
+	    if (success) {
+		getLogger().info("Chest file converted successfully!");
+	    } else {
+		getLogger().warning("Convertion failed!");
+	    }
 	}
 	
 	getCommand("sc").setExecutor(new SyncChestCommands());

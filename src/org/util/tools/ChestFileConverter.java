@@ -159,7 +159,7 @@ public class ChestFileConverter {
 	}
     }
     
-    public void convert() {
+    public boolean convert() {
 	if (chestFileExists()) {
 	    
 	    File chestFile = new File(this.plugin.getDataFolder().getPath() + File.separator + "chests.yml");
@@ -178,8 +178,8 @@ public class ChestFileConverter {
 		    world = Bukkit.getWorld(chestConfig.getString("config.mem.mainChests." + i + ".world"));
 		    
 		    if (world == null) {
-			this.log.severe("Can not find World " + chestConfig.getString("config.mem.mainChests." + i + ".world") + "! Is it loaded?");
-			return;
+			this.log.severe("Can not find World '" + chestConfig.getString("config.mem.mainChests." + i + ".world") + "'! Is it loaded? Aborting convertion!");
+			return false;
 		    }
 		    
 		    x = chestConfig.getInt("config.mem.mainChests." + i + ".X");
@@ -193,6 +193,7 @@ public class ChestFileConverter {
 			this.log.info("MainChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 		    } else {
 			this.log.info("Error: Can't add MainChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			return false;
 		    }
 		    
 		    if (chestConfig.getBoolean("config.mem.mainChests." + i + ".doubleChest") == true) {
@@ -208,6 +209,7 @@ public class ChestFileConverter {
 			    this.log.info("MainChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 			} else {
 			    this.log.severe("Error: Can't add MainChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			    return false;
 			}
 		    }
 		}
@@ -219,8 +221,8 @@ public class ChestFileConverter {
 		    world = Bukkit.getWorld(chestConfig.getString("config.mem.relatedChests." + i + ".world"));
 		    
 		    if (world == null) {
-			this.log.severe("Can not find World " + chestConfig.getString("config.mem.mainChests." + i + ".world") + "! Is it loaded?");
-			return;
+			this.log.severe("Can not find World '" + chestConfig.getString("config.mem.mainChests." + i + ".world") + "'! Is it loaded? Aborting convertion!");
+			return false;
 		    }
 		    
 		    x = chestConfig.getInt("config.mem.relatedChests." + i + ".X");
@@ -234,14 +236,15 @@ public class ChestFileConverter {
 			this.log.info("RelatedChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 		    } else {
 			this.log.severe("Error: Can't add RelatedChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			return false;
 		    }
 		    
 		    if (chestConfig.getBoolean("config.mem.relatedChests." + i + ".doubleChest") == true) {
 			world = Bukkit.getWorld(chestConfig.getString("config.mem.relatedChests." + i + ".world"));
 			
 			if (world == null) {
-			    this.log.severe("Can not find World " + chestConfig.getString("config.mem.relatedChests." + i + ".world") + "! Is it loaded?");
-			    return;
+			    this.log.severe("Can not find World '" + chestConfig.getString("config.mem.relatedChests." + i + ".world") + "'! Is it loaded? Aborting convertion!");
+			    return false;
 			}
 			
 			x = chestConfig.getInt("config.mem.relatedChests." + i + ".coChest.X");
@@ -255,6 +258,7 @@ public class ChestFileConverter {
 			    this.log.info("RelatedChest found @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
 			} else {
 			    this.log.severe("Error: Can't add RelatedChest @ " + world.getName() + "[" + x + ", " + y + ", " + z + "]");
+			    return false;
 			}
 		    }
 		    
@@ -267,8 +271,8 @@ public class ChestFileConverter {
 				    world = Bukkit.getWorld(chestConfig.getString("config.mem.mainChests." + k + ".world"));
 				    
 				    if (world == null) {
-					this.log.severe("Can not find World " + chestConfig.getString("config.mem.mainChests." + k + ".world") + "! Is it loaded?");
-					return;
+					this.log.severe("Can not find World '" + chestConfig.getString("config.mem.mainChests." + k + ".world") + "'! Is it loaded? Aborting convertion!");
+					return false;
 				    }
 				    
 				    x = chestConfig.getInt("config.mem.mainChests." + k + ".X");
@@ -286,6 +290,7 @@ public class ChestFileConverter {
 					this.log.info(rChest.toString() + " is now linked to " + mChest.toString());
 				    } else {
 					this.log.severe("Error: Chests don't exists!");
+					return false;
 				    }
 				}
 			    }
@@ -294,7 +299,8 @@ public class ChestFileConverter {
 		}
 	    }
 	    chestFile.renameTo(new File(this.plugin.getDataFolder().getPath() + File.separator + "chests.old.yml"));
-	    return;
+	    return true;
 	}
+	return true;
     }
 }
