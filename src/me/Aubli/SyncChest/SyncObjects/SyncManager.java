@@ -41,9 +41,9 @@ public class SyncManager {
     public SyncManager() {
 	instance = this;
 	
-	this.mainChestPath = SyncChest.getInstance().getDataFolder().getPath() + "/Chests/Main";
-	this.relatedChestPath = SyncChest.getInstance().getDataFolder().getPath() + "/Chests/Related";
-	this.hopperPath = SyncChest.getInstance().getDataFolder().getPath() + "/Hoppers";
+	this.mainChestPath = SyncChest.getInstance().getDataFolder().getPath() + File.separator + "Chests" + File.separator + "Main";
+	this.relatedChestPath = SyncChest.getInstance().getDataFolder().getPath() + File.separator + "Chests" + File.separator + "Related";
+	this.hopperPath = SyncChest.getInstance().getDataFolder().getPath() + File.separator + "Hoppers";
 	
 	if (!new File(this.mainChestPath).exists() || !new File(this.relatedChestPath).exists() || !new File(this.hopperPath).exists()) {
 	    new File(this.mainChestPath).mkdirs();
