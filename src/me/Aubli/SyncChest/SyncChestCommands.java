@@ -153,7 +153,7 @@ public class SyncChestCommands implements CommandExecutor {
 					return true;
 				    }
 				} else if (econ.has(p, SyncChest.getChestPrice())) {
-				    amount = (int) (econ.getBalance(p) / SyncChest.getChestPrice());
+				    amount = (int) Math.floor((econ.getBalance(p) / SyncChest.getChestPrice()));
 				    
 				    if (econ.has(p, amount * SyncChest.getChestPrice())) {
 					EconomyResponse er = econ.withdrawPlayer(p, SyncChest.getChestPrice() * amount);
