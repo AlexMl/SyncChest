@@ -109,6 +109,10 @@ public class SyncChestCommands implements CommandExecutor {
 			}
 		    }
 		    
+		    if (args[0].equalsIgnoreCase("main") || args[0].equalsIgnoreCase("related")) {
+			return onCommand(sender, cmd, cmdLabel, new String[] {args[0], "1"});
+		    }
+		    
 		    printCommands(playerSender);
 		    return true;
 		}
