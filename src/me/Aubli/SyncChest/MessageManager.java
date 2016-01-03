@@ -45,7 +45,7 @@ public class MessageManager {
 		
 		this.language = language;
 		
-		this.messageFile = new File(SyncChest.getInstance().getDataFolder().getPath() + "/Messages/" + language + "-messages.yml");
+		this.messageFile = new File(SyncChest.getInstance().getDataFolder().getPath() + File.separator + "Messages" + File.separator + language + "-messages.yml");
 		this.messageConfig = YamlConfiguration.loadConfiguration(messageFile);
 		
 		if(!messageFile.exists() || isOutdated()){
